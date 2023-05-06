@@ -7,7 +7,7 @@
 using namespace std;
 using namespace sf;
 
-Visualizer::Visualizer() : Reader("music/Breathe.mp3") {
+Visualizer::Visualizer() : Reader("hw:PCH,0") {
     ContextSettings settings;
 	settings.antialiasingLevel = 4;
 	

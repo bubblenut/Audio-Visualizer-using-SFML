@@ -5,7 +5,6 @@
 
 FFT::~FFT() {
     delete[] OutFFT;
-    fftw_destroy_plan(Plan);
     fftw_cleanup();
 }
 

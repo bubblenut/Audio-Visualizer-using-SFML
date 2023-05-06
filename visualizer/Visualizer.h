@@ -2,7 +2,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include "../visualization_modes/AbstractMode.h"
-#include "../audio_processing/FileAudioProcessor.h"
+#include "../audio_processing/PcmAudioProcessor.h"
 
 #define WIDTH 1000
 #define HEIGHT 800
@@ -22,7 +22,7 @@ private:
 
     //unique_ptr<AbstractMode> mode;
 
-    FileAudioProcessor Reader;
+    PcmAudioProcessor Reader;
 public:
     Visualizer();
     void run();    
