@@ -1,5 +1,7 @@
 #include "FFT.h"
 
+#include <exception>
+
 FFT::~FFT() {
     delete[] OutFFT;
     fftw_destroy_plan(Plan);
@@ -20,6 +22,10 @@ void FFT::LazyInit(double sampleRateD) {
 }
 
 void FFT::CalculateWindowHann(const vector<double>& input) {
+    if (input.size() != SampleRate) {
+        throw runtime_error("input size don't equal sampleRate size");
+    }
+
     const auto N = input.size();
 
     for (size_t i = 0; i < N; ++i) {
