@@ -74,6 +74,10 @@ PcmAudioProcessor::PcmAudioProcessor(const string& deviceName)
     PowSbits = pow(2, Sbits);
 }
 
+double PcmAudioProcessor::GetSampleRate() const {
+    return SampleRate;
+}
+
 vector<double> PcmAudioProcessor::Read() {
     while (snd_pcm_avail(PcmDevice) < 0) {}
     auto count = snd_pcm_readi(PcmDevice, Buffer, SampleRate);

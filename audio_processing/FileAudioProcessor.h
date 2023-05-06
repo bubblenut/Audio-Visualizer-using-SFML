@@ -12,6 +12,7 @@ class FileAudioProcessor : public BaseAudioProcessor {
 public:
     FileAudioProcessor(const string& filePath);
 
+    double GetSampleRate() const override;
     vector<double> Read() override;
     vector<double> Read(size_t size) override;
     void Start() override;

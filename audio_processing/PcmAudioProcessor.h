@@ -14,6 +14,7 @@ class PcmAudioProcessor : public BaseAudioProcessor {
 public:
     PcmAudioProcessor(const string& deviceName = "default");
 
+    double GetSampleRate() const override;
     vector<double> Read() override;
     vector<double> Read(size_t size) override;
     void Start() override;
