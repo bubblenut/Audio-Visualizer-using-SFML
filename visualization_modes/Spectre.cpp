@@ -15,7 +15,7 @@ void Spectre::update(vector<double>& audio_in) {
     for (int i = 0; i < audio_spectre->size(); ++i) {
         double re = (*audio_spectre)[i].real();
         double im = (*audio_spectre)[i].imag();
-        rectH[i] = sqrt(re * re + im * im);
+        rectH[i] = log(sqrt(re * re + im * im)) * 100;
     }
     //каждый раз высота обновляется
 
@@ -23,10 +23,12 @@ void Spectre::update(vector<double>& audio_in) {
 
 void Spectre::draw(RenderWindow& window) {
     double W = WIDTH / static_cast<double>(rectH.size());
-    for (int i = 20; i < rectH.size(); ++i) {
+    int colorJump = static_cast<int>((rectH.size()) / 256);
+    for (int i = 30; i < rectH.size() - 5000; ++i) {
         RectangleShape rect(Vector2f(W - 3, rectH[i]));
         rect.setFillColor(sf::Color::White);
         rect.setPosition(Vector2f(i * W, HEIGHT - rectH[i]));
+        rect.setFillColor({255 - i / colorJump, 0 , i / colorJump});
         window.draw(rect);
     }
 }
