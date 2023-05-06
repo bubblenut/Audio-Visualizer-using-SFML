@@ -13,7 +13,9 @@ if (error < 0) { \
     cout << "Success" << endl; \
 }
 
-PcmAudioProcessor::PcmAudioProcessor(const string& deviceName) {
+PcmAudioProcessor::PcmAudioProcessor(const string& deviceName) 
+{
+    log.open("log1");
     int err;
     snd_pcm_hw_params_t *hwParams;
 
@@ -43,7 +45,7 @@ PcmAudioProcessor::PcmAudioProcessor(const string& deviceName) {
     CHECK_PCM_ERROR(err);
     
     cout << "HW set channels: ";
-    err = snd_pcm_hw_params_set_channels(PcmDevice, hwParams, 2);
+    err = snd_pcm_hw_params_set_channels(PcmDevice, hwParams, 1);
     CHECK_PCM_ERROR(err);
     
     snd_pcm_uframes_t setBufferSize = 11140000;
@@ -83,7 +85,7 @@ vector<double> PcmAudioProcessor::Read() {
 
     vector<double> result(count);
     for (int i = 0; i < count; ++i) {
-        result[i] = static_cast<uint16_t*>(Buffer)[i] / PowSbits;
+        result[i] = static_cast<int16_t*>(Buffer)[i] / PowSbits;
     }
 
     return result;
@@ -98,7 +100,7 @@ vector<double> PcmAudioProcessor::Read(size_t size) {
 
         if (count > 0) {
             for (int i = 0; i < count; ++i) {
-                result.push_back(static_cast<uint16_t*>(Buffer)[i] / PowSbits);
+                result.push_back(static_cast<int16_t*>(Buffer)[i] / PowSbits);
             }
         }
     }
