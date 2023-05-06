@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include "../visualizer/Visualizer.h"
 
 using namespace std;
 
@@ -14,7 +15,7 @@ public:
     virtual void update() = 0;
 
 protected:
-    const vector<double>& audio;
+    vector<double> audio;
     double sample_rate_audio;
     int sample_rate_fft;    
 };

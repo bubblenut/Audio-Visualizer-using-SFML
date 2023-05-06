@@ -14,6 +14,8 @@ Visualizer::Visualizer() {
 
 void::Visualizer::run() {
 
+	//создается AuidioProcessor, FFT, базовый Mode
+	//fft.lazy_init();
 	//AuidioProcessor читает музыку в audio
 
 	//audio передается в обработчик FFT
