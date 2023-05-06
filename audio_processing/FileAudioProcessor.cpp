@@ -8,6 +8,10 @@ FileAudioProcessor::FileAudioProcessor(const string& filePath)
     Audio = audiorw::read(filePath, SampleRate);
 }
 
+double FileAudioProcessor::GetSampleRate() const {
+    return SampleRate;
+}
+
 vector<double> FileAudioProcessor::Read() {
     double time = Clock.getElapsedTime().asSeconds();
     vector<double> result(Audio[0].begin() + (SampleRate * PrevTime), Audio[0].begin() + (SampleRate * time));
