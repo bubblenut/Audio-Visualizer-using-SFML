@@ -1,9 +1,5 @@
 #include "FFT.h"
 
-using namespace std;
-
-#include <iostream>
-
 FFT::~FFT() {
     delete[] outFFT;
     fftw_destroy_plan(Plan);
