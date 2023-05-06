@@ -2,6 +2,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include "../visualization_modes/AbstractMode.h"
+#include "../audio_processing/FileAudioProcessor.h"
 
 #define WIDTH 1000
 #define HEIGHT 800
@@ -17,9 +18,11 @@ private:
     string active_audio;
 
     string active_mode;
-    void initialize_mode(const string& mode, const string& audio);
+    //void initialize_mode(const string& mode, const string& audio);
 
-    unique_ptr<AbstractMode> mode;
+    //unique_ptr<AbstractMode> mode;
+
+    FileAudioProcessor Reader;
 public:
     Visualizer();
     void run();    

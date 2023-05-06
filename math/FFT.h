@@ -16,11 +16,12 @@ public:
 
     void LazyInit(double sampleRateD);
     unique_ptr<vector<complex<double>>> Calculate(vector<double>& input);
+    size_t GetReadSize() const;
 private:
     void CalculateWindowHann(const vector<double>& input);
 
     vector<double> _WindowHann;
     fftw_complex* OutFFT;
     fftw_plan Plan;
-    int SampleRate = 1;
+    size_t SampleRate = 1;
 };

@@ -9,7 +9,7 @@ private:
     vector<double> rectH;
     FFT fft;
 public:
-    Spectre(const vector<double>& audio_in, double sample_rate_audio, int sample_rate_fft);
+    Spectre(double sample_rate_audio);
     void draw(sf::RenderWindow& window) override;
-    void update() override;
+    void update(vector<double>& audio_in) override;
 };

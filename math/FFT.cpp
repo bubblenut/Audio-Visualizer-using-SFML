@@ -1,6 +1,7 @@
 #include "FFT.h"
 
 #include <exception>
+#include <iostream>
 
 FFT::~FFT() {
     delete[] OutFFT;
@@ -45,4 +46,8 @@ unique_ptr<vector<complex<double>>> FFT::Calculate(vector<double>& input) {
     }
 
     return std::move(result);
+}
+
+size_t FFT::GetReadSize() const {
+    return SampleRate;
 }

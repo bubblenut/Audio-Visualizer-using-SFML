@@ -1,6 +1,7 @@
 #include "FileAudioProcessor.h"
 
 #include <audiorw.hpp>
+#include <iostream>
 
 FileAudioProcessor::FileAudioProcessor(const string& filePath)
     : Offset(0), PrevTime(0)

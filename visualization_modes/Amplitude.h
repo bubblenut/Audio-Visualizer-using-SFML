@@ -7,7 +7,7 @@ class Amplitude : public AbstractMode
 private:
     sf::VertexArray points;
 public:
-    Amplitude(const vector<double>& audio_in, double sample_rate_audio, int sample_rate_fft);
+    Amplitude(double sample_rate_audio);
     void draw(sf::RenderWindow& window) override;
-    void update() override;
+    void update(vector<double>& audio_in) override;
 };
