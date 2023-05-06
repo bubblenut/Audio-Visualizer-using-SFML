@@ -1,7 +1,7 @@
 #include "FFT.h"
 
 FFT::~FFT() {
-    delete[] outFFT;
+    delete[] OutFFT;
     fftw_destroy_plan(Plan);
     fftw_cleanup();
 }
@@ -13,10 +13,10 @@ void FFT::LazyInit(double sampleRateD) {
     }
     SampleRate /= 2;
 
-    outFFT = new fftw_complex[SampleRate / 2 + 1];
+    OutFFT = new fftw_complex[SampleRate / 2 + 1];
     _WindowHann.resize(SampleRate);
 
-    Plan = fftw_plan_dft_r2c_1d(SampleRate, nullptr, outFFT, FFTW_ESTIMATE);
+    Plan = fftw_plan_dft_r2c_1d(SampleRate, nullptr, OutFFT, FFTW_ESTIMATE);
 }
 
 void FFT::CalculateWindowHann(const vector<double>& input) {
@@ -31,11 +31,11 @@ void FFT::CalculateWindowHann(const vector<double>& input) {
 unique_ptr<vector<complex<double>>> FFT::Calculate(vector<double>& input) {
     unique_ptr<vector<complex<double>>> result = make_unique<vector<complex<double>>>(SampleRate / 2 + 1);
     CalculateWindowHann(input);
-    fftw_execute_dft_r2c(Plan, input.data(), outFFT);
+    fftw_execute_dft_r2c(Plan, input.data(), OutFFT);
     fftw_cleanup();
 
     for (size_t i = 0; i < SampleRate / 2 + 1; ++i) {
-        (*result)[i] = {outFFT[i][0], outFFT[i][1]};
+        (*result)[i] = {OutFFT[i][0], OutFFT[i][1]};
     }
 
     return std::move(result);

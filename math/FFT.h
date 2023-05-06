@@ -17,9 +17,10 @@ public:
     void LazyInit(double sampleRateD);
     unique_ptr<vector<complex<double>>> Calculate(vector<double>& input);
 private:
-    vector<double> _WindowHann;
     void CalculateWindowHann(const vector<double>& input);
-    fftw_complex* outFFT;
+
+    vector<double> _WindowHann;
+    fftw_complex* OutFFT;
     fftw_plan Plan;
     int SampleRate = 1;
 };
