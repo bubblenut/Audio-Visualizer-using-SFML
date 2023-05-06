@@ -15,7 +15,6 @@ if (error < 0) { \
 
 PcmAudioProcessor::PcmAudioProcessor(const string& deviceName) 
 {
-    log.open("log1");
     int err;
     snd_pcm_hw_params_t *hwParams;
 
