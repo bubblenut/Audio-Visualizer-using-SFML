@@ -15,10 +15,7 @@ public:
     double GetSampleRate() const override;
     vector<double> Read() override;
     vector<double> Read(size_t size) override;
-    void Start() override;
 private:
-    sf::Clock Clock;
-    double PrevTime;
     size_t Offset;
     double SampleRate;
     vector<vector<double>> Audio;

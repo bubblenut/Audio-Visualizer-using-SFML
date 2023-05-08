@@ -14,7 +14,6 @@ if (error < 0) { \
 }
 
 PcmAudioProcessor::PcmAudioProcessor(const string& deviceName)
-    : PrevTime(0)
 {
     int err;
     snd_pcm_hw_params_t *hwParams;
@@ -86,14 +85,8 @@ vector<double> PcmAudioProcessor::Read() {
     double t = Clock.getElapsedTime().asSeconds();
     auto size = (t - PrevTime) * SampleRate;
     PrevTime = t;
-    auto count = snd_pcm_readi(PcmDevice, Buffer, size);
 
-    vector<double> result(count);
-    for (int i = 0; i < count; ++i) {
-        result[i] = static_cast<int16_t*>(Buffer)[i] / PowSbits;
-    }
-
-    return result;
+    return Read(size);
 }
 
 vector<double> PcmAudioProcessor::Read(size_t size) {
@@ -104,8 +97,4 @@ vector<double> PcmAudioProcessor::Read(size_t size) {
         result.push_back(static_cast<int16_t*>(Buffer)[i] / PowSbits);
     }
     return result;
-}
-
-void PcmAudioProcessor::Start() {
-
 }
