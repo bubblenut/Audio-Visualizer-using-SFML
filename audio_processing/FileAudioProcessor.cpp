@@ -4,7 +4,7 @@
 #include <iostream>
 
 FileAudioProcessor::FileAudioProcessor(const string& filePath)
-    : Offset(0), PrevTime(0)
+    : Offset(0)
 {
     Audio = audiorw::read(filePath, SampleRate);
 }
@@ -26,8 +26,4 @@ vector<double> FileAudioProcessor::Read(size_t size) {
     Offset += size;
     PrevTime = Clock.getElapsedTime().asSeconds();
     return result;
-}
-
-void FileAudioProcessor::Start() {
-    Clock.restart();
 }

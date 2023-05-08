@@ -17,10 +17,7 @@ public:
     double GetSampleRate() const override;
     vector<double> Read() override;
     vector<double> Read(size_t size) override;
-    void Start() override;
 private:
-    sf::Clock Clock;
-    double PrevTime;
     void* Buffer;
     snd_pcm_t* PcmDevice;
     snd_pcm_uframes_t BufferSize;
