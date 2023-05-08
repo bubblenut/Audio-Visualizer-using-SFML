@@ -2,11 +2,11 @@
 
 #include "BaseAudioProcessor.h"
 
-#include <alsa/asoundlib.h>
-
-#include <fstream>
-
 #include <string>
+
+#include <SFML/Graphics.hpp>
+
+#include <alsa/asoundlib.h>
 
 using namespace std;
 
@@ -19,6 +19,8 @@ public:
     vector<double> Read(size_t size) override;
     void Start() override;
 private:
+    sf::Clock Clock;
+    double PrevTime;
     void* Buffer;
     snd_pcm_t* PcmDevice;
     snd_pcm_uframes_t BufferSize;

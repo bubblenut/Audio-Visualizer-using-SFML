@@ -13,13 +13,14 @@ if (error < 0) { \
     cout << "Success" << endl; \
 }
 
-PcmAudioProcessor::PcmAudioProcessor(const string& deviceName) 
+PcmAudioProcessor::PcmAudioProcessor(const string& deviceName)
+    : PrevTime(0)
 {
     int err;
     snd_pcm_hw_params_t *hwParams;
 
     cout << "PCM open: ";
-    err = snd_pcm_open(&PcmDevice, deviceName.data(), SND_PCM_STREAM_CAPTURE, SND_PCM_NONBLOCK);
+    err = snd_pcm_open(&PcmDevice, deviceName.data(), SND_PCM_STREAM_CAPTURE, 0);
     CHECK_PCM_ERROR(err);
 
     cout << "HW params malloc: ";
@@ -79,12 +80,13 @@ double PcmAudioProcessor::GetSampleRate() const {
 }
 
 vector<double> PcmAudioProcessor::Read() {
-    while (snd_pcm_avail(PcmDevice) < 0) {}
-    auto count = snd_pcm_readi(PcmDevice, Buffer, SampleRate);
-
-    if (count < 0) {
-        return {};
+    if (PrevTime == 0) {
+        Clock.restart();
     }
+    double t = Clock.getElapsedTime().asSeconds();
+    auto size = (t - PrevTime) * SampleRate;
+    PrevTime = t;
+    auto count = snd_pcm_readi(PcmDevice, Buffer, size);
 
     vector<double> result(count);
     for (int i = 0; i < count; ++i) {
@@ -97,15 +99,9 @@ vector<double> PcmAudioProcessor::Read() {
 vector<double> PcmAudioProcessor::Read(size_t size) {
     vector<double> result;
 
-    while (result.size() < size) {
-        while (snd_pcm_avail(PcmDevice) < 0) {}
-        auto count = snd_pcm_readi(PcmDevice, Buffer, size - result.size());
-
-        if (count > 0) {
-            for (int i = 0; i < count; ++i) {
-                result.push_back(static_cast<int16_t*>(Buffer)[i] / PowSbits);
-            }
-        }
+    auto count = snd_pcm_readi(PcmDevice, Buffer, size);
+    for (int i = 0; i < count; ++i) {
+        result.push_back(static_cast<int16_t*>(Buffer)[i] / PowSbits);
     }
     return result;
 }
