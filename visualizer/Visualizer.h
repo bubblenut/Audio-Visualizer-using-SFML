@@ -3,6 +3,7 @@
 #include "../visualization_modes/AbstractMode.h"
 #include "../audio_processing/PcmAudioProcessor.h"
 #include "../audio_processing/FileAudioProcessor.h"
+#include "../audio_processing/PulseAudioProcessor.h"
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -23,7 +24,7 @@ private:
 
     //unique_ptr<AbstractMode> mode;
 
-    FileAudioProcessor Reader;
+    PulseAudioProcessor Reader;
 public:
     Visualizer();
     void run();    

@@ -7,7 +7,7 @@
 using namespace std;
 using namespace sf;
 
-Visualizer::Visualizer() : Reader("music/Breathe.mp3") {
+Visualizer::Visualizer() : Reader() {
     ContextSettings settings;
 	settings.antialiasingLevel = 4;
 	
@@ -18,10 +18,10 @@ Visualizer::Visualizer() : Reader("music/Breathe.mp3") {
 
 void::Visualizer::run() {
 
-    sf::Music music;
-    if (!music.openFromFile("music/Breathe.ogg"))
-        return; // error
-    music.play();
+    // sf::Music music;
+    // if (!music.openFromFile("music/Breathe.ogg"))
+    //     return; // error
+    // music.play();
 	//создается AuidioProcessor, FFT, базовый Mode
 	Reader.Start();
 	Spectre spectre(Reader.GetSampleRate());

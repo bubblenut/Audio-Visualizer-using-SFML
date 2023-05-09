@@ -20,4 +20,5 @@ private:
     pa_simple* Device;
     const double SampleRate;
     void* Buffer;
+    string ChooseValidDevice();
 };

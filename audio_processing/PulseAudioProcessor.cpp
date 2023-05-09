@@ -3,10 +3,38 @@
 #include <iostream>
 #include <exception>
 #include <cmath>
+#include <fstream>
 
 using namespace std;
 
 #define RETRY_COUNT 5
+
+string PulseAudioProcessor::ChooseValidDevice() {
+    system("pacmd list-sources | grep -e 'name:' -e 'index:' > audio_devices.txt");
+    
+    string s;
+    string bluetooth = "";
+    string speaker = "";
+
+    ifstream fin("audio_devices.txt");
+    while(getline(fin, s)) {
+        if(s.find("bluez") != string::npos) {
+            s = s.substr(s.find("<") + 1, s.find(">") - s.find("<") - 1);            
+            bluetooth = s;
+            cout << "\nbluetooth: " << bluetooth << '\n';
+            fin.close();            
+            //return move(bluetooth.c_str());
+            return bluetooth;
+        } else if (s.find("alsa_output") != string::npos) {            
+            s = s.substr(s.find("<") + 1, s.find(">") - s.find("<") - 1);
+            speaker = s;
+            cout << "\nspeaker: " << speaker << '\n';
+        }
+    }
+    fin.close();
+    //return move(speaker.c_str());
+    return speaker;
+}
 
 PulseAudioProcessor::PulseAudioProcessor()
     : SampleRate(44100)
@@ -22,10 +50,11 @@ PulseAudioProcessor::PulseAudioProcessor()
         if (error == 0) {
             break;
         }
+        cout << "attempt " << i + 1 << '\n';
         Device = pa_simple_new(NULL,
                         "audio_visualizer",
                         PA_STREAM_RECORD,
-                        "bluez_sink.4C_79_6E_F3_78_38.a2dp_sink.monitor",
+                        ChooseValidDevice().c_str(),
                         "audio_visualizer",
                         &ss,
                         NULL,
