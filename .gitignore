@@ -2,3 +2,4 @@
 app
 *.o
 *.a
+audio_devices.txt

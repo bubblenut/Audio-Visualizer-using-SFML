@@ -20,19 +20,15 @@ string PulseAudioProcessor::ChooseValidDevice() {
     while(getline(fin, s)) {
         if(s.find("bluez") != string::npos) {
             s = s.substr(s.find("<") + 1, s.find(">") - s.find("<") - 1);            
-            bluetooth = s;
-            cout << "\nbluetooth: " << bluetooth << '\n';
+            bluetooth = s;            
             fin.close();            
-            //return move(bluetooth.c_str());
             return bluetooth;
         } else if (s.find("alsa_output") != string::npos) {            
             s = s.substr(s.find("<") + 1, s.find(">") - s.find("<") - 1);
-            speaker = s;
-            cout << "\nspeaker: " << speaker << '\n';
+            speaker = s;            
         }
     }
-    fin.close();
-    //return move(speaker.c_str());
+    fin.close();    
     return speaker;
 }
 
