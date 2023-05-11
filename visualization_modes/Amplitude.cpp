@@ -8,13 +8,17 @@ Amplitude::Amplitude(double sample_rate_audio)
 
 void Amplitude::update(vector<double>& audio_in)
 {   
-    const int color_jump = static_cast<int>(audio_in.size() / 256);
-    for (size_t i = 0; i < audio_in.size(); ++i) {
-        //уточнить че за хуйня в заполнении Y внутри Vector2f, уточнить константы
-        points[i] = Vertex(Vector2f(0.f, //x
-        static_cast<float>(HEIGHT / 2)) + Vector2f(i / static_cast<float>(audio_in.size()) * WIDTH, audio_in[i] * static_cast<float>(0.008)),
-        Color(255 - i / color_jump, 0, i / color_jump));
+    size_t border = 256 * 100;
+    if (points.getVertexCount() == 0) {
+         points = VertexArray(LineStrip, border);
     }
+    double W = WIDTH / static_cast<double>(border);
+    const int color_jump = static_cast<int>(border / 256);
+    for (size_t i = 0; i < border; ++i) { 
+        double x = i * W;       
+        double y = HEIGHT / 2 + audio_in[i] * 1000;             
+        points[i] = Vertex(Vector2f(x, y) , Color(255 - i / color_jump, i / color_jump, 0, 150));
+    }    
 }
 
 
