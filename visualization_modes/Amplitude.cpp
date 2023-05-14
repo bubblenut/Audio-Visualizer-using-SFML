@@ -17,7 +17,7 @@ void Amplitude::update(vector<double>& audio_in)
     for (size_t i = 0; i < border; ++i) { 
         double x = i * W;       
         double y = HEIGHT / 2 + audio_in[i] * 1000;             
-        points[i] = Vertex(Vector2f(x, y) , Color(255 - i / color_jump, i / color_jump, 0, 150));
+        points[i] = Vertex(Vector2f(x, y) , Color(255 - i / color_jump, i / color_jump, 0));
     }    
 }
 
