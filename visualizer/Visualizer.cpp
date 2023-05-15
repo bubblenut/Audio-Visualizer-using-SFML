@@ -57,10 +57,10 @@ void::Visualizer::run() {
 		window.clear();
 
 		spectre.update(data);
-		amplitude.update(data);
+		//amplitude.update(data);
 
 		spectre.draw(window);
-		amplitude.draw(window);
+		//amplitude.draw(window);
 
 		window.display();
 	}

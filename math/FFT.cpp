@@ -14,6 +14,7 @@ void FFT::LazyInit(double sampleRateD) {
         SampleRate *= 2;
     }
     SampleRate /= 2;
+    SampleRate = 1024;
 
     OutFFT = new fftw_complex[SampleRate / 2 + 1];
     _WindowHann.resize(SampleRate);
