@@ -17,15 +17,11 @@ class Visualizer
 private:
     sf::RenderWindow window;
 
-    string active_audio;
-
-    string active_mode;
-    //void initialize_mode(const string& mode, const string& audio);
-
-    //unique_ptr<AbstractMode> mode;
-
     PulseAudioProcessor Reader;
 public:
+//в конструкторе инициализируется окно рендеринга и аудиопроцессор
     Visualizer();
-    void run();    
+
+//тут происходит контроль над модами и обработка действий пользователя
+    void run();
 };

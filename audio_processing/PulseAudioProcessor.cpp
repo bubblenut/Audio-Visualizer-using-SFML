@@ -19,16 +19,16 @@ string PulseAudioProcessor::ChooseValidDevice() {
     ifstream fin("audio_devices.txt");
     while(getline(fin, s)) {
         if(s.find("bluez") != string::npos) {
-            s = s.substr(s.find("<") + 1, s.find(">") - s.find("<") - 1);            
-            bluetooth = s;            
-            fin.close();            
-            return bluetooth;
-        } else if (s.find("alsa_output") != string::npos) {            
             s = s.substr(s.find("<") + 1, s.find(">") - s.find("<") - 1);
-            speaker = s;            
+            bluetooth = s;
+            fin.close();
+            return bluetooth;
+        } else if (s.find("alsa_output") != string::npos) {
+            s = s.substr(s.find("<") + 1, s.find(">") - s.find("<") - 1);
+            speaker = s;
         }
     }
-    fin.close();    
+    fin.close();
     return speaker;
 }
 

@@ -19,9 +19,13 @@ void Spectre::update(vector<double>& audio_in) {
 }
 
 void Spectre::draw(RenderWindow& window) {
-    double W = WIDTH / static_cast<double>(rectH.size() - 5000);
+
+    // sf::Shader effect;
+    // effect.loadFromFile("bloom.glsl", sf::Shader::Fragment);
+    
+    double W = WIDTH / static_cast<double>(rectH.size());
     int colorJump = static_cast<int>((rectH.size() - 500) / 256);
-    for (size_t i = 0; i < rectH.size() - 5000; ++i) {
+    for (size_t i = 0; i < rectH.size(); ++i) {
         RectangleShape rect(Vector2f(W - 3, W - 3));
         rect.setFillColor(Color::White);
         rect.setPosition(Vector2f(i * W, HEIGHT * 7 / 8 - rectH[i]));
