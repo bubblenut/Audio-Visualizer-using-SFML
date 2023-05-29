@@ -6,6 +6,7 @@
 
 #include "../visualization_modes/Spectre.h"
 #include "../visualization_modes/Amplitude.h"
+#include "../visualization_modes/Spectrogram.h"
 
 using namespace std;
 using namespace sf;
@@ -19,6 +20,8 @@ Visualizer::Visualizer() : Reader() {
 	window.setFramerateLimit(FPS);
 	window.setKeyRepeatEnabled(false);
 }
+
+//void controlModeDrawing(AbstractMode* mode, vector<AbstractMode*> vec);
 
 void::Visualizer::run() {
 	//установка иконки приложения 
@@ -36,6 +39,7 @@ void::Visualizer::run() {
 
 	Amplitude* amplitude = new Amplitude(Reader.GetSampleRate());
 	Spectre* spectre = new Spectre(Reader.GetSampleRate());
+	Spectrogram* spectrogram = new Spectrogram(Reader.GetSampleRate());
 	
 	//список вкл/откл отрисовки, хранит моды в порядке добавления
 	vector<AbstractMode*> avaliableModes;
@@ -71,6 +75,14 @@ void::Visualizer::run() {
 						avaliableModes.erase(it);
 					} else {
 						avaliableModes.push_back(spectre);
+					}
+				} else if (event.key.code == sf::Keyboard::Num3) {
+					auto it = find(avaliableModes.begin(), avaliableModes.end(), spectrogram);
+
+					if (it != avaliableModes.end()) {
+						avaliableModes.erase(it);
+					} else {
+						avaliableModes.push_back(spectrogram);
 					}
 				}
 			}
