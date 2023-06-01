@@ -7,6 +7,7 @@
 #include "../visualization_modes/Spectre.h"
 #include "../visualization_modes/Amplitude.h"
 #include "../visualization_modes/Spectrogram.h"
+#include "../visualization_modes/Rave.h"
 
 using namespace std;
 using namespace sf;
@@ -39,7 +40,7 @@ void::Visualizer::run() {
 
 	Amplitude* amplitude = new Amplitude(Reader.GetSampleRate());
 	Spectre* spectre = new Spectre(Reader.GetSampleRate());
-	Spectrogram* spectrogram = new Spectrogram(Reader.GetSampleRate());
+	Rave* rave = new Rave(Reader.GetSampleRate());
 	
 	//список вкл/откл отрисовки, хранит моды в порядке добавления
 	vector<AbstractMode*> avaliableModes;
@@ -77,12 +78,12 @@ void::Visualizer::run() {
 						avaliableModes.push_back(spectre);
 					}
 				} else if (event.key.code == sf::Keyboard::Num3) {
-					auto it = find(avaliableModes.begin(), avaliableModes.end(), spectrogram);
+					auto it = find(avaliableModes.begin(), avaliableModes.end(), rave);
 
 					if (it != avaliableModes.end()) {
 						avaliableModes.erase(it);
 					} else {
-						avaliableModes.push_back(spectrogram);
+						avaliableModes.push_back(rave);
 					}
 				}
 			}

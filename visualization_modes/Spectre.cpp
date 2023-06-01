@@ -14,8 +14,7 @@ void Spectre::update(vector<double>& audio_in) {
         double re = (*audio_spectre)[i].real();
         double im = (*audio_spectre)[i].imag();
         rectH[i] = log(sqrt(re * re + im * im)) * 100;
-
-    }    
+    }
 }
 
 void Spectre::draw(RenderWindow& window) {

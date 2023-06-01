@@ -8,8 +8,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-#define WIDTH 1000
-#define HEIGHT 800
+#define WIDTH 2160
+#define HEIGHT 1440
 #define FPS 55
 
 class Visualizer

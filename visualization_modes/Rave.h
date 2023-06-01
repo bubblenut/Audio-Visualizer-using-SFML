@@ -1,10 +1,13 @@
 #include "AbstractMode.h"
 #include "../math/FFT.h"
 
+using namespace sf;
 class Rave : public AbstractMode {
 private:
     vector<double> Hz;
-    FFT* fft;
+    FFT fft;
+
+    CircleShape CenterCircle;
 public:
     Rave(double sample_rate_audio);
     void draw(sf::RenderWindow& window) override;

@@ -19,7 +19,7 @@ Spectrogram::Spectrogram(double sample_rate_audio)
 
 void Spectrogram::update(vector<double>& audio_in) {
     auto audio_spectre = fft.Calculate(audio_in);
-    rectH.resize(audio_spectre->size());
+    rectH.resize(44100);
     for (size_t i = 0; i < audio_spectre->size(); ++i) {
         double re = (*audio_spectre)[i].real();
         double im = (*audio_spectre)[i].imag();
