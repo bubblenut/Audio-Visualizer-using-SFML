@@ -3,18 +3,17 @@
 using namespace sf;
 using namespace std;
 
-Rave::Rave(double sample_rate_audio) 
-    : AbstractMode(sample_rate_audio), 
+Rave::Rave(double sample_rate_audio, shared_ptr<FFT> fftPtr_)
+    : AbstractMode(sample_rate_audio, fftPtr_), 
     CenterCircle(1, 3)
 {
-    fft.LazyInit(sample_rate_audio);
     CenterCircle.setFillColor(sf::Color::Black);
     CenterCircle.setOutlineThickness(5.);
     CenterCircle.setOutlineColor(sf::Color::Red);
 }
 
 void Rave::update(vector<double>& audio_in) {
-    auto audio_spectre = fft.Calculate(audio_in);
+    auto audio_spectre = fftPtr->GetResult();
     Hz.resize(audio_spectre->size());
     double re = (*audio_spectre)[20].real();
     double im = (*audio_spectre)[20].imag();

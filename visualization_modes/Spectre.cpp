@@ -2,13 +2,12 @@
 
 using namespace sf;
 
-Spectre::Spectre(double sample_rate_audio)
-    : AbstractMode(sample_rate_audio) {    
-    fft.LazyInit(sample_rate_audio);
+Spectre::Spectre(double sample_rate_audio, shared_ptr<FFT> fftPtr_)
+    : AbstractMode(sample_rate_audio, fftPtr_) {
 }
 
 void Spectre::update(vector<double>& audio_in) {
-    auto audio_spectre = fft.Calculate(audio_in);
+    auto audio_spectre = fftPtr->GetResult();
     rectH.resize(audio_spectre->size());
     for (size_t i = 0; i < audio_spectre->size(); ++i) {
         double re = (*audio_spectre)[i].real();

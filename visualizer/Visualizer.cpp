@@ -6,7 +6,6 @@
 
 #include "../visualization_modes/Spectre.h"
 #include "../visualization_modes/Amplitude.h"
-#include "../visualization_modes/Spectrogram.h"
 #include "../visualization_modes/Rave.h"
 
 using namespace std;
@@ -18,7 +17,7 @@ Visualizer::Visualizer() : Reader() {
 	
 	const VideoMode desktop = VideoMode::getDesktopMode();
 	window.create(VideoMode(WIDTH, HEIGHT, desktop.bitsPerPixel), "Visualizrr",Style::Default, settings);
-	window.setFramerateLimit(FPS);
+	//window.setFramerateLimit(FPS);
 	window.setKeyRepeatEnabled(false);
 }
 
@@ -36,11 +35,14 @@ void::Visualizer::run() {
 	Reader.Start();
 	vector<double> data;
 
+	shared_ptr<FFT> fftPtr = make_shared<FFT>();
+	fftPtr->LazyInit(Reader.GetSampleRate());
+
 	//инициализация модов отрисовки
 
-	Amplitude* amplitude = new Amplitude(Reader.GetSampleRate());
-	Spectre* spectre = new Spectre(Reader.GetSampleRate());
-	Rave* rave = new Rave(Reader.GetSampleRate());
+	Amplitude* amplitude = new Amplitude(Reader.GetSampleRate(), fftPtr);
+	Spectre* spectre = new Spectre(Reader.GetSampleRate(), fftPtr);
+	Rave* rave = new Rave(Reader.GetSampleRate(), fftPtr);
 	
 	//список вкл/откл отрисовки, хранит моды в порядке добавления
 	vector<AbstractMode*> avaliableModes;
@@ -50,7 +52,13 @@ void::Visualizer::run() {
 
 	//audio передается в обработчик FFT
  
+	sf::Clock clock;
+	float prevTime = 0;
+
 	while(window.isOpen()) {
+		float time = clock.getElapsedTime().asMilliseconds();
+		clock.restart();
+		cout << time << endl;
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -90,12 +98,14 @@ void::Visualizer::run() {
 		}
 
 		if (data.empty()) {
-			data = Reader.Read(spectre->GetReadSize());
+			data = Reader.Read(fftPtr->GetReadSize());
 		} else {
 			auto tmp = Reader.Read();
 			data.insert(data.end(), tmp.begin(), tmp.end());
 			data.erase(data.begin(), data.begin() + tmp.size());
 		}
+
+		fftPtr->Calculate(data);
 
 		window.clear();
 		//у всех включенных модов вызывается апдейт и отрисовка

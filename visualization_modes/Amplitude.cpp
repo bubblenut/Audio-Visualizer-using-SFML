@@ -3,8 +3,8 @@
 
 using namespace sf;
 
-Amplitude::Amplitude(double sample_rate_audio)
-    : AbstractMode(sample_rate_audio)
+Amplitude::Amplitude(double sample_rate_audio, shared_ptr<FFT> fftPtr_)
+    : AbstractMode(sample_rate_audio, fftPtr_)
 {}
 
 void Amplitude::update(vector<double>& audio_in)

@@ -19,6 +19,7 @@ void FFT::LazyInit(double sampleRateD) {
     _WindowHann.resize(SampleRate);
 
     Plan = fftw_plan_dft_r2c_1d(SampleRate, nullptr, OutFFT, FFTW_ESTIMATE);
+    FftResult = make_shared<vector<complex<double>>>(SampleRate / 2 + 1);
 }
 
 void FFT::CalculateWindowHann(const vector<double>& input) {
@@ -34,19 +35,20 @@ void FFT::CalculateWindowHann(const vector<double>& input) {
     }
 }
 
-unique_ptr<vector<complex<double>>> FFT::Calculate(vector<double>& input) {
-    unique_ptr<vector<complex<double>>> result = make_unique<vector<complex<double>>>(SampleRate / 2 + 1);
+void FFT::Calculate(vector<double>& input) {
     CalculateWindowHann(input);
     fftw_execute_dft_r2c(Plan, input.data(), OutFFT);
     fftw_cleanup();
 
     for (size_t i = 0; i < SampleRate / 2 + 1; ++i) {
-        (*result)[i] = {OutFFT[i][0], OutFFT[i][1]};
+        (*FftResult)[i] = {OutFFT[i][0], OutFFT[i][1]};
     }
-
-    return std::move(result);
 }
 
 size_t FFT::GetReadSize() const {
     return SampleRate;
+}
+
+shared_ptr<vector<complex<double>>> FFT::GetResult() {
+    return FftResult;
 }

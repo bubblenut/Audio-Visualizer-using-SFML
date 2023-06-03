@@ -20,10 +20,13 @@ public:
     void LazyInit(double sampleRateD);
 
 //преобразование Фурье проиходит в этой функции
-    unique_ptr<vector<complex<double>>> Calculate(vector<double>& input);
+    void Calculate(vector<double>& input);
 
 //функция возвращает частоту дискр степени 2
     size_t GetReadSize() const;
+
+//получение результата ффт
+    shared_ptr<vector<complex<double>>> GetResult();
 private:
 //в этой функции работает оконное сглаживание
     void CalculateWindowHann(const vector<double>& input);
@@ -32,4 +35,5 @@ private:
     fftw_complex* OutFFT;
     fftw_plan Plan;
     size_t SampleRate = 1;
+    shared_ptr<vector<complex<double>>> FftResult;
 };
