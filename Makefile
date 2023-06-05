@@ -6,7 +6,8 @@ SOURCES=main.cpp \
 		visualization_modes/Amplitude.cpp \
 		visualization_modes/Spectre.cpp \
 		visualization_modes/Rave.cpp\
-		math/FFT.cpp \
+		visualization_modes/Alisa.cpp\
+		math/FFT.cpp\
 		audio_processing/FileAudioProcessor.cpp \
 		audio_processing/PcmAudioProcessor.cpp \
 		audio_processing/PulseAudioProcessor.cpp \

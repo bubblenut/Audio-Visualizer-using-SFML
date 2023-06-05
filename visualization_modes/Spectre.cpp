@@ -12,11 +12,10 @@ void Spectre::update(vector<double>& audio_in) {
     for (size_t i = 0; i < audio_spectre->size(); ++i) {
         double re = (*audio_spectre)[i].real();
         double im = (*audio_spectre)[i].imag();
-        double h = sqrt(re * re + im * im);
+        double h = sqrt(re * re + im * im);        
         //double normalizedH = 2 / (2 + pow(M_E, -1 * h));
         double normalizedH = log10(max(h, 0.));
         rectH[i] = normalizedH * 250;
-
         //rectH[i] = min(1000., h);
     }
 }
@@ -28,10 +27,11 @@ void Spectre::draw(RenderWindow& window) {
 
     double W = WIDTH / static_cast<double>(rectH.size() - 5000) / 2;
     int colorJump = static_cast<int>((rectH.size() - 2000) / 256);
+    double R = WIDTH / static_cast<double>(rectH.size() - 5000) * 3 / 2;
 
     //левая половина
-    for (size_t i = 0; i < (rectH.size() - 5000); ++i) {
-        RectangleShape rect(Vector2f(3.5, 3.5));
+    for (size_t i = 0; i < (rectH.size() - 5000); i += 3) {
+        CircleShape rect(R * 7.5, 6);
 
         rect.setFillColor(Color::White);
         //на какую высоту от низа экрана надо обрезать спектр
@@ -44,7 +44,8 @@ void Spectre::draw(RenderWindow& window) {
         } else {
             rect.setFillColor(sf::Color(i / colorJump, 100 , 255 - i / colorJump, 150));
         }
-        RectangleShape rectSym(rect);
+        //rect.setFillColor(sf::Color(i / colorJump, 0 , 255 - i / colorJump));
+        CircleShape rectSym(rect);
         rectSym.setPosition(WIDTH - rectX, rectY);
         window.draw(rect);
         window.draw(rectSym);

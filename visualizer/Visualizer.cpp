@@ -7,6 +7,7 @@
 #include "../visualization_modes/Spectre.h"
 #include "../visualization_modes/Amplitude.h"
 #include "../visualization_modes/Rave.h"
+#include "../visualization_modes/Alisa.h"
 
 using namespace std;
 using namespace sf;
@@ -24,7 +25,7 @@ Visualizer::Visualizer() : Reader() {
 //void controlModeDrawing(AbstractMode* mode, vector<AbstractMode*> vec);
 
 void::Visualizer::run() {
-	//установка иконки приложения 
+	//установка иконки приложения
 
 	sf::Image icon;
 	icon.loadFromFile("icons/icon_particles.png");
@@ -43,6 +44,7 @@ void::Visualizer::run() {
 	Amplitude* amplitude = new Amplitude(Reader.GetSampleRate(), fftPtr);
 	Spectre* spectre = new Spectre(Reader.GetSampleRate(), fftPtr);
 	Rave* rave = new Rave(Reader.GetSampleRate(), fftPtr);
+	Alisa* alisa = new Alisa(Reader.GetSampleRate(), fftPtr);
 	
 	//список вкл/откл отрисовки, хранит моды в порядке добавления
 	vector<AbstractMode*> avaliableModes;
@@ -55,10 +57,19 @@ void::Visualizer::run() {
 	sf::Clock clock;
 	float prevTime = 0;
 
+
+	//setting background
+	sf::Texture textureBg;
+	textureBg.loadFromFile("icons/lilith.jpg");
+	sf::Sprite background;
+	background.setPosition(0,0);
+	background.setTexture(textureBg);
+	//background.setScale(1.01 * WIDTH / 1920, 1.01 * HEIGHT / 1080);
+
 	while(window.isOpen()) {
-		float time = clock.getElapsedTime().asMilliseconds();
-		clock.restart();
-		cout << time << endl;
+		// float time = clock.getElapsedTime().asMilliseconds();
+		// clock.restart();
+		// cout << time << endl;
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -93,6 +104,14 @@ void::Visualizer::run() {
 					} else {
 						avaliableModes.push_back(rave);
 					}
+				} else if (event.key.code == sf::Keyboard::Num4) {
+					auto it = find(avaliableModes.begin(), avaliableModes.end(), alisa);
+
+					if (it != avaliableModes.end()) {
+						avaliableModes.erase(it);
+					} else {
+						avaliableModes.push_back(alisa);
+					}
 				}
 			}
 		}
@@ -108,6 +127,10 @@ void::Visualizer::run() {
 		fftPtr->Calculate(data);
 
 		window.clear();
+		window.draw(background);
+		RectangleShape darkrect({WIDTH, HEIGHT});
+		darkrect.setFillColor(sf::Color(1, 1, 1, 180));
+		window.draw(darkrect);
 		//у всех включенных модов вызывается апдейт и отрисовка
 		for (auto& mode : avaliableModes) {
 			mode->update(data);

@@ -26,7 +26,7 @@ void Rave::draw(sf::RenderWindow& window) {
     double R = Hz[20];
     double normalizedR = 1 / (1 + pow(M_E, -1 * R));
     
-    CenterCircle.setRadius(log10(max(R, 0.)) * 256);
+    CenterCircle.setRadius(max(0., log10(max(R, 0.))) * 256);
     CenterCircle.setPosition({WIDTH / 2 - CenterCircle.getRadius(), HEIGHT / 2 - CenterCircle.getRadius()});
     CenterCircle.setOutlineColor({255, 255, 255, CenterCircle.getRadius()});
     //CenterCircle.rotate(90 / 55);

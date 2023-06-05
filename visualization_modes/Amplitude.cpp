@@ -10,7 +10,7 @@ Amplitude::Amplitude(double sample_rate_audio, shared_ptr<FFT> fftPtr_)
 void Amplitude::update(vector<double>& audio_in)
 {
     //это если что окно звука, которое показывает амплитуда. длина амплитуды крч
-    size_t border = 256 * 10;
+    size_t border = 256 * 9;
 
     if (points.getVertexCount() == 0) {
         points = VertexArray(LineStrip, border);
@@ -30,9 +30,10 @@ void Amplitude::draw(RenderWindow& window) {
     for (size_t i = 0; i < points.getVertexCount(); ++i) {
         
         float rectX = WIDTH / points.getVertexCount() < 1 ? 1. : WIDTH / points.getVertexCount();
+        //float rectX = WIDTH / points.getVertexCount();
         float rectY = 50;
 
-        RectangleShape rect({rectX, rectY});
+        RectangleShape rect({rectX - 0.1, rectY});
         rect.setPosition({points[i].position.x, points[i].position.y - rectY / 2});
         rect.setFillColor(points[i].color);
         window.draw(rect);
