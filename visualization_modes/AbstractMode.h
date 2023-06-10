@@ -6,13 +6,15 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <memory>
+
 using namespace std;
 
 class AbstractMode
 {
 public:
 //конструктор будет вызывать LazyInit у объекта fft
-    AbstractMode(double sample_rate_audio);
+    AbstractMode(double sample_rate_audio, shared_ptr<FFT> fftPtr_);
 
     virtual ~AbstractMode() {};
 
@@ -22,12 +24,9 @@ public:
 //функция обновления состояние каждый кадр
     virtual void update(vector<double>& audio_in) = 0;
 
-//функция для обращения во внутренний объект fft
-    virtual size_t GetReadSize() const;
-
 protected:
 //математический объект
-    FFT fft;
+    shared_ptr<FFT> fftPtr;
 
 //данные для отрисовки
     vector<double> audio;

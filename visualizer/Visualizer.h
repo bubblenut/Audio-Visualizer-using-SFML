@@ -8,8 +8,14 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-#define WIDTH 1000
-#define HEIGHT 800
+#include "../postFX/dynamic_blur.hpp"
+
+// #define WIDTH 3840
+// #define HEIGHT 2160
+
+#define WIDTH 2160
+#define HEIGHT 1440
+
 #define FPS 55
 
 class Visualizer
@@ -18,6 +24,8 @@ private:
     sf::RenderWindow window;
 
     PulseAudioProcessor Reader;
+
+    //void ControlMode(vector<AbstractMode> avaliableModes);
 public:
 //в конструкторе инициализируется окно рендеринга и аудиопроцессор
     Visualizer();
