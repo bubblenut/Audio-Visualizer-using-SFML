@@ -15,6 +15,7 @@
 
 #define WIDTH 2160
 #define HEIGHT 1440
+
 #define FPS 55
 
 class Visualizer

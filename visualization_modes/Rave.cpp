@@ -5,7 +5,7 @@ using namespace std;
 
 Rave::Rave(double sample_rate_audio, shared_ptr<FFT> fftPtr_)
     : AbstractMode(sample_rate_audio, fftPtr_), 
-    CenterCircle(1, 3)
+    CenterCircle(1, 60)
 {
     CenterCircle.setFillColor(sf::Color::Black);
     CenterCircle.setOutlineThickness(5.);

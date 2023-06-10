@@ -15,7 +15,7 @@ void Spectre::update(vector<double>& audio_in) {
         double h = sqrt(re * re + im * im);        
         //double normalizedH = 2 / (2 + pow(M_E, -1 * h));
         double normalizedH = log10(max(h, 0.));
-        rectH[i] = normalizedH * 250;
+        rectH[i] = normalizedH * 300;
         //rectH[i] = min(1000., h);
     }
 }

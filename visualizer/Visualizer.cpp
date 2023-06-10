@@ -12,6 +12,8 @@
 using namespace std;
 using namespace sf;
 
+#define bgPic "icons/3840x2160.jpg"
+
 Visualizer::Visualizer() : Reader() {
     ContextSettings settings;
 	settings.antialiasingLevel = 4;
@@ -60,9 +62,13 @@ void::Visualizer::run() {
 
 	//setting background
 	sf::Texture textureBg;
-	textureBg.loadFromFile("icons/lilith.jpg");
+	textureBg.loadFromFile(bgPic);
 	sf::Sprite background;
 	background.setPosition(0,0);
+	float scaleX = 2160. / 3840.;
+	float scaleY = 1440. / 2160.;
+	cout << scaleX << " " << scaleY << '\n';
+	background.setScale({scaleX, scaleY});
 	background.setTexture(textureBg);
 	//background.setScale(1.01 * WIDTH / 1920, 1.01 * HEIGHT / 1080);
 
@@ -129,7 +135,7 @@ void::Visualizer::run() {
 		window.clear();
 		window.draw(background);
 		RectangleShape darkrect({WIDTH, HEIGHT});
-		darkrect.setFillColor(sf::Color(1, 1, 1, 180));
+		darkrect.setFillColor(sf::Color(1, 1, 1, 240));
 		window.draw(darkrect);
 		//у всех включенных модов вызывается апдейт и отрисовка
 		for (auto& mode : avaliableModes) {
